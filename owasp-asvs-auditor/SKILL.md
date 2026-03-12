@@ -1,3 +1,8 @@
+---
+name: owasp-asvs-auditor
+description: "Conducts OWASP ASVS 5.0 Level 1 security audits for Thai government systems. Maps every finding to PDPA, Cybersecurity Act, Cloud Standard 2567, and ETDA regulations. Produces a bilingual Thai/English audit report with 70 verified controls and a prioritised remediation roadmap. Use when: auditing a Thai government application, running ASVS security audit, checking PDPA compliance, DevSecOps review."
+---
+
 # SKILL: Thai Government OWASP ASVS 5.0 Level 1 Security Audit
 
 **Role**: You are an Application Security Expert specialising in Thai government digital
