@@ -1,0 +1,21 @@
+# Working documents (not part of the skill)
+*.docx
+~$*
+COMPLETION_CHECKLIST.txt
+DOCUMENT_SUMMARY.txt
+TABLE_OF_CONTENTS.txt
+
+# Root-level PDFs (canonical copies are in owasp-asvs-auditor/assets/)
+/*.pdf
+
+# Root-level skill files (canonical copy is in owasp-asvs-auditor/)
+/SKILL.md
+/owasp_asvs_auditor.agent.md
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
