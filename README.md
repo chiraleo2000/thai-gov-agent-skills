@@ -115,4 +115,4 @@ Contains:
 *Based on OWASP ASVS 5.0.0 (May 2025) — CC BY-SA 4.0*  
 *Extended for Thai Government compliance*  
 *พัฒนาสำหรับมาตรฐานความมั่นคงปลอดภัยของระบบสารสนเทศภาครัฐไทย*  
-*Version 1.1.0 | March 2026*
+*Version 1.1.1 | March 2026*
