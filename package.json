@@ -1,6 +1,6 @@
 {
   "name": "thai-gov-agent-skills",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "OWASP ASVS 5.0 Level 1 security audit skill for Thai government systems — maps findings to PDPA, Cybersecurity Act, Cloud Standard 2567, and ETDA.",
   "keywords": [
     "owasp",

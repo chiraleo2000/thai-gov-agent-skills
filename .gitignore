@@ -1,5 +1,7 @@
 # Working documents (not part of the skill)
 *.docx
+*.pptx
+*.rar
 ~$*
 COMPLETION_CHECKLIST.txt
 DOCUMENT_SUMMARY.txt
