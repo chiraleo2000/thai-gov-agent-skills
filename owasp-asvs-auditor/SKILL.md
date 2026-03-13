@@ -20,7 +20,8 @@ mapping every finding to applicable Thai laws and government security standards.
 | **Access Required** | Full read access to target repository |
 | **Inputs Required** | Target repo path; project name (auto-derived from `package.json` / `pyproject.toml` / git repo name); optional: agency name, CII classification, PDPA role, cloud deployment model |
 | **ASVS PDF** | `assets/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf` (skill workspace) |
-| **Thai Standards PDFs** | `assets/มาตรฐานด้านการรักษาความมั่นคงปลอดภัยไซเบอร์ระบบคลาวน์ 2567.pdf` · `assets/มาตรฐานการรักษาความมั่นคงปลอดภัยเว็บไซต์ พ.ศ. 2568.pdf` · `assets/คู่มือการพัฒนาระบบซอฟต์แวร์ยุค AI Era สำหรับหน่วยงานภาครัฐ.pdf` · `assets/คู่มือการพัฒนาระบบซอฟต์แวร์ยุค_AI_สำหรับหน่วยงานภาครัฐ.pdf` · `assets/คู่มือทางเทคนิคเชิงลึก_ความมั่นคงปลอดภัยไซเบอร์_DevSecOpsV0.1.pdf` (skill workspace) |
+| **OWASP Developer Guide** | `assets/OWASP_Developer_Guide-V4.1.9.pdf` (skill workspace) |
+| **Thai Standards PDFs** | `assets/มาตรฐานด้านการรักษาความมั่นคงปลอดภัยไซเบอร์ระบบคลาวน์ 2567.pdf` · `assets/มาตรฐานการรักษาความมั่นคงปลอดภัยเว็บไซต์ พ.ศ. 2568.pdf` · `assets/คู่มือทางเทคนิคเชิงลึก_ความมั่นคงปลอดภัยไซเบอร์_DevSecOpsV0.1.pdf` (skill workspace) |
 | **Template Location** | `references/REPORT-TEMPLATE.md` (skill workspace) |
 
 ### Optional Inputs
@@ -281,21 +282,24 @@ TARGET_REPO     = path provided by the user or TH_AUDIT_REPO env var
    → Extract all 70 Level 1 requirements in document order. NEVER reorder.
    → If missing or unreadable: STOP — report error (see Error Handling).
 
-2. Load Thai standards PDFs:
+2. Load OWASP Developer Guide:
+   SKILL_WORKSPACE/assets/OWASP_Developer_Guide-V4.1.9.pdf
+   → Use as supplementary reference for secure development best practices.
+   → If missing: WARN and continue.
+
+3. Load Thai standards PDFs:
    SKILL_WORKSPACE/assets/มาตรฐานด้านการรักษาความมั่นคงปลอดภัยไซเบอร์ระบบคลาวน์ 2567.pdf
    SKILL_WORKSPACE/assets/มาตรฐานการรักษาความมั่นคงปลอดภัยเว็บไซต์ พ.ศ. 2568.pdf
-   SKILL_WORKSPACE/assets/คู่มือการพัฒนาระบบซอฟต์แวร์ยุค AI Era สำหรับหน่วยงานภาครัฐ.pdf
-   SKILL_WORKSPACE/assets/คู่มือการพัฒนาระบบซอฟต์แวร์ยุค_AI_สำหรับหน่วยงานภาครัฐ.pdf
    SKILL_WORKSPACE/assets/คู่มือทางเทคนิคเชิงลึก_ความมั่นคงปลอดภัยไซเบอร์_DevSecOpsV0.1.pdf
    → Build lookup: asvs_req_id → { pdpa_section, cybersec_section, cloud_area, etda_ref }
    → If missing: WARN and continue without Thai law annotations.
 
-3. Load report template into memory:
+4. Load report template into memory:
    SKILL_WORKSPACE/references/REPORT-TEMPLATE.md
    → DO NOT write any file until Phase 3, Step 4.
    → DO NOT deviate from template structure.
 
-4. Load supporting references into memory:
+5. Load supporting references into memory:
    SKILL_WORKSPACE/references/framework-defaults.md   (Step 2 of Decision Tree)
    SKILL_WORKSPACE/references/severity-guidance.md    (Step 4 of Decision Tree)
    SKILL_WORKSPACE/references/th-gov-remediation-guide.md  (Phase 3 remediation)
@@ -470,8 +474,6 @@ skill-workspace/
 ├── assets/
 │   ├── OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf
 │   ├── OWASP_Developer_Guide-V4.1.9.pdf
-│   ├── คู่มือการพัฒนาระบบซอฟต์แวร์ยุค AI Era สำหรับหน่วยงานภาครัฐ.pdf
-│   ├── คู่มือการพัฒนาระบบซอฟต์แวร์ยุค_AI_สำหรับหน่วยงานภาครัฐ.pdf
 │   ├── คู่มือทางเทคนิคเชิงลึก_ความมั่นคงปลอดภัยไซเบอร์_DevSecOpsV0.1.pdf
 │   ├── มาตรฐานการรักษาความมั่นคงปลอดภัยเว็บไซต์ พ.ศ. 2568.pdf
 │   └── มาตรฐานด้านการรักษาความมั่นคงปลอดภัยไซเบอร์ระบบคลาวน์ 2567.pdf
@@ -488,4 +490,4 @@ skill-workspace/
 *Based on OWASP ASVS 5.0.0 (May 2025) — CC BY-SA 4.0*
 *Extended for Thai Government compliance: PDPA, Cybersecurity Act, Cloud Standard 2567, ETDA*
 *พัฒนาสำหรับมาตรฐานความมั่นคงปลอดภัยของระบบสารสนเทศภาครัฐไทย*
-*Version 1.0.0 | March 2026*
+*Version 1.0.1 | March 2026*

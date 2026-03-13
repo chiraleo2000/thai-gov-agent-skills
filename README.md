@@ -35,8 +35,6 @@ npx skills add chiraleo2000/thai-gov-agent-skills@owasp-asvs-auditor --agent cop
 | `OWASP_Developer_Guide-V4.1.9.pdf` | OWASP Developer Guide reference |
 | `มาตรฐานด้านการรักษาความมั่นคงปลอดภัยไซเบอร์ระบบคลาวน์ 2567.pdf` | Thailand Cloud Security Standard 2567 |
 | `มาตรฐานการรักษาความมั่นคงปลอดภัยเว็บไซต์ พ.ศ. 2568.pdf` | Website Security Standard 2568 |
-| `คู่มือการพัฒนาระบบซอฟต์แวร์ยุค AI Era สำหรับหน่วยงานภาครัฐ.pdf` | AI-Era Software Dev Guide for Government |
-| `คู่มือการพัฒนาระบบซอฟต์แวร์ยุค_AI_สำหรับหน่วยงานภาครัฐ.pdf` | AI-Era Software Dev Guide (alt. edition) |
 | `คู่มือทางเทคนิคเชิงลึก_ความมั่นคงปลอดภัยไซเบอร์_DevSecOpsV0.1.pdf` | DevSecOps Technical Deep-Dive Manual |
 
 #### Usage

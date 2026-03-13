@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "owasp-asvs-auditor": {
+      "source": "chiraleo2000/thai-gov-agent-skills",
+      "sourceType": "github",
+      "computedHash": "bbcce212cb0b25b91ab8a69e37646136e9908aa779a9f580e5fdc604445ba285"
+    }
+  }
+}
