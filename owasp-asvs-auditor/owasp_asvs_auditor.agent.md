@@ -6,7 +6,7 @@ description: >
   to PDPA (พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562), Cybersecurity Act
   (พ.ร.บ. การรักษาความมั่นคงปลอดภัยไซเบอร์ พ.ศ. 2562), Thailand Cloud Security
   Standard 2567, and ETDA regulations.
-version: "1.0.0"
+version: "1.1.0"
 model: copilot
 tools:
   - file_search
@@ -38,10 +38,16 @@ that simultaneously verify compliance with:
 
 ### Absolute Rules
 
-- Use `assets/OWASP_Application_Security_Verification_Standard_5.0.0_L1_en.csv`
-  as the **only** source of truth for the 70 ASVS L1 items. Evaluate in **strict
-  CSV row order (1–70)**. Do not skip, sort, or reorder.
-- Use `assets/th_gov_compliance_map.csv` to annotate Thai law obligations per finding.
+- Use `assets/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf`
+  as the **only** canonical source of truth for the 70 ASVS L1 items. Evaluate in
+  **strict document order (1–70)**. Do not skip, sort, or reorder.
+- Use the three Thai standards PDFs in `assets/` to annotate Thai law obligations
+  per finding:
+  - `assets/มาตรฐานด้านการรักษาความมั่นคงปลอดภัยไซเบอร์ระบบคลาวน์ 2567.pdf`
+  - `assets/มาตรฐานการรักษาความมั่นคงปลอดภัยเว็บไซต์ พ.ศ. 2568.pdf`
+  - `assets/คู่มือทางเทคนิคเชิงลึก_ความมั่นคงปลอดภัยไซเบอร์_DevSecOpsV0.1.pdf`
+- Use `assets/OWASP_Developer_Guide-V4.1.9.pdf` as supplementary reference for
+  secure development best practices.
 - Use `references/REPORT-TEMPLATE.md` exactly. Do not alter structure.
   Build report **in memory**. Write to disk **once** at the very end.
 - **NEVER** capture, print, log, or store API keys, secrets, passwords, PII,
@@ -87,8 +93,8 @@ Read these at the start of Phase 1.
 | `TH_AUDIT_REPORT` | Output report file path |
 | `TH_AUDIT_GIT_COMMIT` | Git short SHA |
 | `TH_AUDIT_TECH_STACK` | Detected tech stack string |
-| `TH_AUDIT_CSV` | Path to ASVS L1 CSV |
-| `TH_AUDIT_MAP` | Path to Thai compliance map CSV |
+| `TH_AUDIT_PDF` | Path to ASVS 5.0 PDF (canonical source) |
+| `TH_AUDIT_DEVGUIDE` | Path to OWASP Developer Guide PDF |
 | `TH_AUDIT_TEMPLATE` | Path to report template |
 | `TH_AUDIT_DATE` | Audit date (YYYY-MM-DD) |
 
@@ -106,7 +112,7 @@ SKILL_WORKSPACE = directory containing this SKILL.md
 TARGET_REPO     = value of TH_AUDIT_REPO
 ```
 
-Load all CSV and reference files from `SKILL_WORKSPACE`.
+Load all PDF and reference files from `SKILL_WORKSPACE`.
 Run ALL code analysis and grep commands inside `TARGET_REPO` only.
 Never confuse the two paths.
 
@@ -122,31 +128,43 @@ Never confuse the two paths.
   - `TH_AUDIT_CLOUD ≠ none` and `≠ on-premise` → Apply Cloud Security
     Standard 2567 overlays
 
-**Step 1.3 — Load Canonical Assets (All Four Required)**
+**Step 1.3 — Load Canonical Assets (All Five PDF + References Required)**
 
 ```
-1. Load TH_AUDIT_CSV
-   → Parse all 70 rows into an ordered list. NEVER reorder.
+1. Load ASVS PDF:
+   SKILL_WORKSPACE/assets/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf
+   → Extract all 70 Level 1 requirements in document order. NEVER reorder.
 
-2. Load TH_AUDIT_MAP
-   → Build lookup table: asvs_req_id → { pdpa_section, cybersec_section,
-     cloud_area, etda_ref, nist_function, iso_control }
+2. Load OWASP Developer Guide:
+   SKILL_WORKSPACE/assets/OWASP_Developer_Guide-V4.1.9.pdf
+   → Use as supplementary reference for secure development best practices.
 
-3. Load TH_AUDIT_TEMPLATE into memory.
+3. Load Thai standards PDFs:
+   SKILL_WORKSPACE/assets/มาตรฐานด้านการรักษาความมั่นคงปลอดภัยไซเบอร์ระบบคลาวน์ 2567.pdf
+   SKILL_WORKSPACE/assets/มาตรฐานการรักษาความมั่นคงปลอดภัยเว็บไซต์ พ.ศ. 2568.pdf
+   SKILL_WORKSPACE/assets/คู่มือทางเทคนิคเชิงลึก_ความมั่นคงปลอดภัยไซเบอร์_DevSecOpsV0.1.pdf
+   → Build lookup: asvs_req_id → { pdpa_section, cybersec_section,
+     cloud_area, etda_ref }
+
+4. Load TH_AUDIT_TEMPLATE into memory.
    → Do NOT write any file until Phase 3 Step 4.
 
-4. Load references/framework-defaults.md  (Decision Tree Step 3)
-   Load references/severity-guidance.md   (Decision Tree Step 5)
+5. Load supporting references:
+   references/framework-defaults.md   (Decision Tree Step 3)
+   references/severity-guidance.md    (Decision Tree Step 5)
+   references/evidence-patterns.md    (Evidence format validation)
+   references/th-gov-remediation-guide.md  (Phase 3 remediation)
 ```
 
-If `TH_AUDIT_CSV` is missing or has fewer than 70 rows → **STOP**. Report:
-`"ASVS CSV not found or incomplete at TH_AUDIT_CSV"`
+If ASVS PDF is missing or has fewer than 70 L1 items → **STOP**. Report:
+`"ASVS PDF not found or incomplete at assets/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf"`
+If Thai standards PDFs are missing → **WARN** and continue without Thai law annotations.
 
 ---
 
-### Phase 2 — Evaluate All 70 Items (CSV Order, Items 1–70)
+### Phase 2 — Evaluate All 70 Items (ASVS PDF Order, Items 1–70)
 
-For every item in the CSV, apply the full Decision Tree below.
+For every item in the ASVS PDF (in document order), apply the full Decision Tree below.
 Batch independent grep searches across a chapter before reading individual files.
 Use `grep` first; call `read_file` only on matches. Cache results in memory —
 do not re-read the same file across chapters.
@@ -572,14 +590,14 @@ Parse `TH_AUDIT_TEMPLATE`. Substitute every `{{PLACEHOLDER}}` token:
 | `{{PDPA_ROLE}}` | `TH_AUDIT_PDPA` |
 | `{{CLOUD_DEPLOYMENT}}` | `TH_AUDIT_CLOUD` |
 | `{{PASS_COUNT}}` / `{{FAIL_COUNT}}` / etc. | Aggregate counts from Phase 2 |
-| `{{VERIFICATION_TABLE_ROWS}}` | All 70 items in CSV order |
+| `{{VERIFICATION_TABLE_ROWS}}` | All 70 items in ASVS document order |
 | `{{PDPA_M37_STATUS}}` etc. | Derived from findings in relevant chapters |
 | `{{CRITICAL_HIGH_FINDINGS}}` | All ❌ FAIL items with severity Critical or High |
 | `{{MEDIUM_LOW_FINDINGS}}` | All ❌ FAIL items with severity Medium or Low |
 | `{{IMMEDIATE_ACTIONS}}` | Critical + High FAILs sorted by Thai law severity |
 | `{{SHORT_TERM_ACTIONS}}` | Medium FAILs + all ⚠️ NEEDS_REVIEW items |
 | `{{LONG_TERM_ACTIONS}}` | Low FAILs + architectural improvements |
-| `{{SKILL_VERSION}}` | `1.0.0` |
+| `{{SKILL_VERSION}}` | `1.1.0` |
 
 **Step 3.2 — Verification Table Row Format**
 
@@ -656,8 +674,9 @@ Report saved to:
 
 | Scenario | Action |
 |----------|--------|
-| CSV missing / < 70 rows | **STOP** — `"ASVS CSV not found or incomplete at TH_AUDIT_CSV"` |
-| Thai map missing | **WARN** — continue audit without Thai law annotations |
+| ASVS PDF missing or corrupted | **STOP** — `"ASVS PDF not found at assets/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf"` |
+| ASVS PDF has fewer than 70 L1 items | **STOP** — `"ASVS PDF incomplete — found {n} items, expected 70"` |
+| Thai standards PDFs missing | **WARN** — continue audit without Thai law annotations |
 | Codebase empty | **STOP** — `"No source files found in target repository"` |
 | Repo inaccessible | **STOP** — `"Cannot access target path: TH_AUDIT_REPO"` |
 | Git failure | Set commit = `unknown`, continue |
@@ -687,4 +706,4 @@ Report saved to:
 *This agent skill is based on OWASP ASVS 5.0.0 (CC BY-SA 4.0) extended for Thai
 Government compliance.*
 *พัฒนาสำหรับมาตรฐานความมั่นคงปลอดภัยของระบบสารสนเทศภาครัฐไทย*
-*Version 1.0.0 | March 2026*
+*Version 1.1.0 | March 2026*

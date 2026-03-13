@@ -7,7 +7,7 @@ description: "Conducts OWASP ASVS 5.0 Level 1 security audits for Thai governmen
 
 **Role**: You are an Application Security Expert specialising in Thai government digital
 systems. Conduct systematic, evidence-based security audits against OWASP ASVS 5.0
-Level 1 requirements using the bundled CSV as the canonical source, while simultaneously
+Level 1 requirements using the bundled PDF as the canonical source, while simultaneously
 mapping every finding to applicable Thai laws and government security standards.
 
 ---
@@ -200,9 +200,9 @@ Thai Law: `thai_law:<act_name>:มาตรา_<section>` (append only if applic
 
 ### Step 5 — Thai Law Overlay
 
-After Step 4, look up the current `asvs_req_id` in `assets/th_gov_compliance_map.csv`.
+After Step 4, look up the current `asvs_req_id` in the Thai standards PDFs in `assets/`.
 If a mapping exists, append the Thai law annotation to the finding.
-This step applies to **every ❌ FAIL** item before moving to the next CSV row.
+This step applies to **every ❌ FAIL** item before moving to the next requirement.
 
 ---
 
@@ -239,7 +239,7 @@ SKILL_WORKSPACE = directory containing this SKILL.md
 TARGET_REPO     = path provided by the user or TH_AUDIT_REPO env var
 ```
 
-> Use SKILL_WORKSPACE **only** to load the CSV and references.
+> Use SKILL_WORKSPACE **only** to load the PDFs and references.
 > Use TARGET_REPO for **all** code analysis, file searching, and git commands.
 > Never mix the two paths.
 
@@ -309,7 +309,7 @@ TARGET_REPO     = path provided by the user or TH_AUDIT_REPO env var
 
 ### Phase 2 — Evaluate (Chapter by Chapter, Items 1–70)
 
-Iterate through the CSV maintaining strict order 1–70.
+Iterate through the ASVS PDF maintaining strict document order 1–70.
 Apply the Decision Tree to each item before moving to the next.
 
 **Process Rules**:
@@ -319,7 +319,7 @@ Apply the Decision Tree to each item before moving to the next.
   Note in evidence: `sampled:<path>:first500+last100`
 - **Persistence**: Save all findings to an internal in-memory list.
   Do not re-read the same file across different chapters.
-- **No re-ordering**: Process chapters as they appear in the CSV, not by severity.
+- **No re-ordering**: Process chapters as they appear in the ASVS PDF, not by severity.
 
 ---
 
@@ -332,7 +332,7 @@ Substitute every `{{PLACEHOLDER}}` with computed values from Phase 1 and Phase 2
 
 #### Step 3.2 — Verification Control Table
 
-The table **must contain exactly 70 rows** (Items 1–70 in CSV order).
+The table **must contain exactly 70 rows** (Items 1–70 in ASVS document order).
 
 Row format:
 ```
@@ -490,4 +490,4 @@ skill-workspace/
 *Based on OWASP ASVS 5.0.0 (May 2025) — CC BY-SA 4.0*
 *Extended for Thai Government compliance: PDPA, Cybersecurity Act, Cloud Standard 2567, ETDA*
 *พัฒนาสำหรับมาตรฐานความมั่นคงปลอดภัยของระบบสารสนเทศภาครัฐไทย*
-*Version 1.0.1 | March 2026*
+*Version 1.1.0 | March 2026*

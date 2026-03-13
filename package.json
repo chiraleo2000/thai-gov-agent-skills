@@ -1,6 +1,6 @@
 {
   "name": "thai-gov-agent-skills",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "OWASP ASVS 5.0 Level 1 security audit skill for Thai government systems — maps findings to PDPA, Cybersecurity Act, Cloud Standard 2567, and ETDA.",
   "keywords": [
     "owasp",
@@ -11,7 +11,10 @@
     "pdpa",
     "cybersecurity",
     "agent-skill",
-    "copilot"
+    "copilot",
+    "devsecops",
+    "compliance",
+    "thai-law"
   ],
   "author": "chiraleo2000",
   "license": "MIT",
@@ -19,5 +22,12 @@
     "type": "git",
     "url": "https://github.com/chiraleo2000/thai-gov-agent-skills"
   },
-  "homepage": "https://skills.sh/chiraleo2000/thai-gov-agent-skills/owasp-asvs-auditor"
+  "homepage": "https://skills.sh/chiraleo2000/thai-gov-agent-skills/owasp-asvs-auditor",
+  "skills": {
+    "owasp-asvs-auditor": {
+      "directory": "owasp-asvs-auditor",
+      "name": "OWASP ASVS Auditor",
+      "description": "Conducts OWASP ASVS 5.0 Level 1 security audits for Thai government systems with PDPA, Cybersecurity Act, Cloud Standard 2567, and ETDA compliance mapping."
+    }
+  }
 }
