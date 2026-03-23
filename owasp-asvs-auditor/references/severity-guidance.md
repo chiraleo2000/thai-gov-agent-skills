@@ -7,7 +7,7 @@ Reference for Decision Tree Step 4 — Assign severity to ❌ FAIL items.
 ## Severity Levels
 
 | Level | Label | Description | SLA (Recommended) |
-|-------|-------|-------------|--------------------|
+| ----- | ----- | ----------- | ------------------ |
 | 🔴 | **Critical** | Immediate exploitation risk; data breach likely; complete auth/authz bypass | Fix within 24–48 hours |
 | 🟠 | **High** | Significant security weakness; exploitation requires minimal skill | Fix within 1–2 weeks |
 | 🟡 | **Medium** | Moderate risk; exploitation requires specific conditions or chained attacks | Fix within 1–3 months |
@@ -18,7 +18,7 @@ Reference for Decision Tree Step 4 — Assign severity to ❌ FAIL items.
 ## ASVS Chapter Baseline Severity
 
 | Chapter | Baseline Severity | Rationale |
-|---------|-------------------|-----------|
+| ------- | ----------------- | --------- |
 | V1 — Encoding & Sanitization | High | Injection attacks (SQLi, XSS) can lead to full compromise |
 | V2 — Validation & Business Logic | Medium–High | Logic flaws can bypass controls; severity depends on context |
 | V3 — Web Frontend Security | Medium | Client-side protections; mitigated by server-side controls |
@@ -44,6 +44,7 @@ Reference for Decision Tree Step 4 — Assign severity to ❌ FAIL items.
 ### CII Escalation (Cybersecurity Act พ.ร.บ. ไซเบอร์ฯ)
 
 When `CII_CLASS = CII`, escalate severity **one level up** for failures in:
+
 - V6 (Authentication) — มาตรา 45 requires strong access controls
 - V7 (Session Management) — มาตรา 45
 - V8 (Authorization) — มาตรา 45
@@ -55,6 +56,7 @@ When `CII_CLASS = CII`, escalate severity **one level up** for failures in:
 ### PDPA Escalation
 
 When personal data is involved in the finding:
+
 - V1 (Injection) → +PDPA มาตรา 37 if personal data in injected payload
 - V4 (API) → +PDPA มาตรา 37 for API data exposure affecting personal data
 - V5 (Files) → +PDPA มาตรา 37 for personal data in uploaded/downloaded files
@@ -70,6 +72,7 @@ When personal data is involved in the finding:
 ### Cloud Standard 2567 Escalation
 
 When `CLOUD_DEPLOY ≠ none` and `≠ on-premise`:
+
 - V12 findings → TLS 1.2/1.3 mandatory
 - V11 findings → AES-256-GCM required for data at rest
 - V16 findings → 90-day log retention required
@@ -79,7 +82,7 @@ When `CLOUD_DEPLOY ≠ none` and `≠ on-premise`:
 
 ## Severity Decision Matrix
 
-```
+```text
 Is authentication/authorization completely bypassable?
 ├─ YES → 🔴 Critical
 └─ NO

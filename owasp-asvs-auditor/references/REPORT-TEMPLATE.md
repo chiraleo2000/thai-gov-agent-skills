@@ -16,7 +16,7 @@
 ## Executive Summary
 
 | Metric | Count | Percentage |
-|--------|-------|------------|
+| ------ | ----- | ---------- |
 | ✅ PASS | {{PASS_COUNT}} | {{PASS_PCT}}% |
 | ❌ FAIL | {{FAIL_COUNT}} | {{FAIL_PCT}}% |
 | ⚠️ NEEDS_REVIEW | {{REVIEW_COUNT}} | {{REVIEW_PCT}}% |
@@ -26,7 +26,7 @@
 ### Severity Distribution (FAIL Items Only)
 
 | Severity | Count |
-|----------|-------|
+| -------- | ----- |
 | 🔴 Critical | {{CRITICAL_COUNT}} |
 | 🟠 High | {{HIGH_COUNT}} |
 | 🟡 Medium | {{MEDIUM_COUNT}} |
@@ -35,7 +35,7 @@
 ### Thai Law Violations Summary
 
 | Law / Standard | Findings |
-|----------------|----------|
+| -------------- | -------- |
 | PDPA มาตรา 26 (sensitive personal data) | {{PDPA_26_COUNT}} |
 | PDPA มาตรา 37 (security measures) | {{PDPA_37_COUNT}} |
 | PDPA มาตรา 40 (breach notification) | {{PDPA_40_COUNT}} |
@@ -50,8 +50,10 @@
 ## Verification Control Table
 
 | # | ASVS ID | Chapter | Requirement | Status | Evidence | Thai Law |
-|---|---------|---------|-------------|--------|----------|----------|
+| - | ------- | ------- | ----------- | ------ | -------- | -------- |
+<!-- markdownlint-disable MD055 MD056 -->
 {{VERIFICATION_TABLE_ROWS}}
+<!-- markdownlint-enable MD055 MD056 -->
 
 ---
 
