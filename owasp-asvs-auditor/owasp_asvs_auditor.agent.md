@@ -7,11 +7,11 @@ description: >
   (พ.ร.บ. การรักษาความมั่นคงปลอดภัยไซเบอร์ พ.ศ. 2562), Thailand Cloud Security
   Standard 2567, and ETDA regulations.
 tools:
-  - codebase
-  - editFiles
-  - runInTerminal
-  - fetch
-  - problems
+  - search/codebase
+  - edit/editFiles
+  - execute/runInTerminal
+  - web/fetch
+  - read/problems
 ---
 
 # 🇹🇭 Thai Government OWASP ASVS 5.0 Level 1 Security Auditor

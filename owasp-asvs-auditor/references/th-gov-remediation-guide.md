@@ -1,5 +1,4 @@
-# Thai Government Remediation Guide
-# คู่มือการแก้ไขช่องโหว่สำหรับระบบภาครัฐไทย
+# Thai Government Remediation Guide / คู่มือการแก้ไขช่องโหว่สำหรับระบบภาครัฐไทย
 
 ---
 
@@ -10,6 +9,7 @@
 **Trigger**: Personal data categorised as sensitive (health, biometric, religion, criminal record, union membership, political opinion, sexual orientation, disability, genetic data, Thai National ID).
 
 **Required Remediation**:
+
 1. Obtain explicit consent before collection/processing
 2. Encrypt at rest using AES-256-GCM or equivalent
 3. Apply field-level access control (not just table-level)
@@ -17,6 +17,7 @@
 5. Implement data masking in non-production environments
 
 **Thai National ID (เลขบัตรประชาชน) Specific**:
+
 - Must NOT be stored in plain text
 - Hash with HMAC-SHA256 for lookup, encrypt for display
 - Mask display: `X-XXXX-XXXXX-XX-X` → show only last 4 digits
@@ -29,7 +30,7 @@
 **Required Remediation by ASVS Chapter**:
 
 | ASVS Chapter | Remediation Action |
-|--------------|-------------------|
+| ------------ | ----------------- |
 | V1 (Injection) | Implement parameterised queries and output encoding for all personal data |
 | V6 (Auth) | MFA for systems managing personal data of > 5,000 data subjects |
 | V7 (Session) | Session timeout ≤ 30 minutes for personal data access screens |
@@ -41,12 +42,14 @@
 ### มาตรา 40 — Breach Notification (แจ้งเตือนเหตุละเมิดข้อมูล)
 
 **Required Capabilities**:
+
 1. Detect breach within 72 hours (V16 logging must enable this)
 2. Notify PDPC within 72 hours of detection
 3. Notify data subjects "without delay" if high risk
 4. Maintain breach register with: timestamp, description, data types, number of records, containment actions
 
 **Implementation Checklist**:
+
 - [ ] Centralised logging (SIEM or equivalent)
 - [ ] Alerting on anomalous data access patterns
 - [ ] Pre-drafted notification templates (Thai/English)
@@ -58,6 +61,7 @@
 ### มาตรา 41 — Data Subject Rights (สิทธิเจ้าของข้อมูล)
 
 **Required Features**:
+
 - Right to access: API/UI to export personal data (JSON/CSV)
 - Right to correction: Allow data subjects to update their data
 - Right to deletion: Soft-delete with 30-day retention, then hard-delete
@@ -76,7 +80,7 @@
 **Baseline Requirements**:
 
 | Control Area | Requirement |
-|-------------|-------------|
+| ------------ | ----------- |
 | Access Control | Role-based access, least privilege, MFA for admin |
 | Encryption | TLS 1.2+ transit, AES-256 at rest |
 | Configuration | CIS Benchmark compliance or equivalent hardening |
@@ -89,6 +93,7 @@
 ### มาตรา 56 — Incident Reporting
 
 **Requirements**:
+
 1. Report to NCSA within 24 hours of detection (not 72 hours like PDPA)
 2. Maintain incident timeline with UTC+7 timestamps
 3. Classify severity: Critical / High / Medium / Low
@@ -96,6 +101,7 @@
 5. Corrective actions implemented and verified
 
 **Logging Requirements for Compliance**:
+
 - Minimum 90-day online log retention
 - Minimum 1-year archived log retention
 - Include: who, what, when, where, outcome
@@ -111,6 +117,7 @@
 jurisdictions with adequate data protection laws (as determined by PDPC).
 
 **Remediation**:
+
 - Configure cloud provider region to `ap-southeast-1` (Singapore) or Thai region if available
 - For AWS: use `ap-southeast-1` with S3 bucket policy restricting region
 - For Azure: use `Southeast Asia` region
@@ -120,7 +127,7 @@ jurisdictions with adequate data protection laws (as determined by PDPC).
 ### Encryption
 
 | Layer | Requirement | Implementation |
-|-------|-------------|----------------|
+| ----- | ----------- | -------------- |
 | Transit | TLS 1.2+ mandatory | Configure `min_tls_version = "1.2"` |
 | At rest | AES-256-GCM | Enable provider-managed encryption + customer-managed keys for sensitive data |
 | Key management | Rotate keys annually | Use cloud KMS with automatic rotation |
@@ -145,7 +152,7 @@ jurisdictions with adequate data protection laws (as determined by PDPC).
 ### Electronic Transaction Standards
 
 | Standard | Requirement | ASVS Mapping |
-|----------|-------------|--------------|
+| -------- | ----------- | ------------ |
 | Digital Signature | Use certificates from ETDA-approved CA | V11 (Crypto) |
 | Timestamp | RFC 3161 compliant timestamping | V16 (Logging) |
 | Data Integrity | Hash chain or digital signature for critical records | V11 (Crypto) |
@@ -163,7 +170,7 @@ jurisdictions with adequate data protection laws (as determined by PDPC).
 ## 5. Consolidated Remediation Priority Matrix
 
 | Priority | Trigger | SLA | Remediation Action |
-|----------|---------|-----|-------------------|
+| -------- | ------- | --- | ----------------- |
 | P0 🔴 | PDPA มาตรา 26 breach + CII system | 24 hours | Isolate, encrypt, notify NCSA + PDPC |
 | P1 🔴 | Auth bypass on any system | 48 hours | Emergency patch, credential reset |
 | P2 🟠 | Missing encryption (transit or rest) | 1-2 weeks | Enable TLS, configure encryption at rest |
